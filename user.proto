@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package user;
+option go_package="./user";
+
+enum Sex {
+  Default = 0  ;
+  Women   = 10 ;
+  Men     = 20 ;
+}
+
+message Info {
+  int64  Id    = 10 ;
+  Sex    Sex   = 20 ;
+  string Phone = 30 ;
+  string Name  = 40 ;
+}
+
+message SendMessageRequest {
+  string Phone = 10 ;
+}
+message SendMessageResponse {
+  string Code = 10 ;
+}
+
+message LoginRequest {
+  string Phone = 10 ;
+  string Code  = 20 ;
+}
+message LoginResponse {
+  Info Info = 10 ;
+}
+
+message GetUsersRequest {
+  int64 Offset = 10 ;
+  int64 Limit  = 20 ;
+}
+message GetUsersResponse {
+  repeated Info Info = 10 ;
+  int64    Total     = 20 ;
+}
+
+service User {
+  rpc SendMessage  (SendMessageRequest) returns (SendMessageResponse) ;
+  rpc LoginByPhone (LoginRequest)       returns (LoginResponse)       ;
+  rpc GetUsers     (GetUsersRequest)    returns (GetUsersResponse)    ;
+}
